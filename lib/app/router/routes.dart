@@ -1,14 +1,15 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_flutter/ui/auth/intros/intro_screen.dart';
+import 'package:todo_flutter/ui/auth/login/login_screen.dart';
 import 'package:todo_flutter/ui/common/no_route_found.dart';
+import 'package:todo_flutter/ui/home/home_screen.dart';
 
 enum Routes {
-  splash,
-  login,
+  splashScreen,
+  introScreen,
+  loginScreen,
   homeScreen,
-  initialLogin,
-  enterSetupKey,
-  scanQrCode,
 }
 
 extension RouteExt on Routes {
@@ -24,6 +25,15 @@ class AppRouter {
     Widget screen = const NoRouteFoundScreen();
     if (settings.name != null) {
       switch (EnumToString.fromString(Routes.values, settings.name!)) {
+        case Routes.loginScreen:
+          screen = const LoginScreen();
+          break;
+        case Routes.introScreen:
+          screen = const IntroScreen();
+          break;
+        case Routes.homeScreen:
+          screen = const HomeScreen();
+          break;
         default:
       }
     }

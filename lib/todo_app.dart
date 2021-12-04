@@ -5,6 +5,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import 'app/router/routes.dart';
 import 'app/theme/palette.dart';
+import 'ui/auth/splash/splash_screen.dart';
 
 class TodoApp extends StatefulWidget {
   const TodoApp({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _TodoAppState extends State<TodoApp> {
   Widget build(BuildContext context) {
     final botToastBuilder = BotToastInit();
     return MaterialApp(
-      title: 'TRSTD Authentication Application',
+      title: 'Todo Application',
 
       debugShowCheckedModeBanner: false,
 
@@ -79,10 +80,10 @@ class _PreLoaderState extends State<PreLoader> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           WidgetsBinding.instance?.addPostFrameCallback((timestamp) {
-            navigationService.pushNamedAndRemoveUntil(Routes.initialLogin.value);
+            // navigationService.pushNamedAndRemoveUntil(Routes.initialLogin.value);
           });
         }
-        return const SizedBox();
+        return const SplashScreen();
       },
     );
   }
