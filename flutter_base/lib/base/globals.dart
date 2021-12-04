@@ -71,11 +71,36 @@ void showLog(String msg) {
   debugPrintThrottled(msg, wrapWidth: 220);
 }
 
-void showBotToastNotification(String? message, {Alignment? alignment, Duration? duration}) {
+void showBotToastNotification(
+  String? message, {
+  Alignment? alignment,
+  Duration? duration,
+  bool hideCloseButton = false,
+  Color? color,
+}) {
   BotToast.showSimpleNotification(
     title: message ?? somethingWentWrongM,
     align: alignment,
+    backgroundColor: color,
     duration: duration ?? const Duration(seconds: 3),
+    hideCloseButton: hideCloseButton,
+  );
+}
+
+void showErrorToastNotification(
+  String? message, {
+  Alignment? alignment,
+  Duration? duration,
+  bool hideCloseButton = true,
+  Color? color,
+}) {
+  BotToast.showSimpleNotification(
+    title: message ?? somethingWentWrongM,
+    align: alignment ?? Alignment.bottomCenter,
+    backgroundColor: Colors.red,
+    titleStyle: const TextStyle(color: Colors.white),
+    duration: duration ?? const Duration(seconds: 3),
+    hideCloseButton: hideCloseButton,
   );
 }
 

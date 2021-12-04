@@ -21,6 +21,11 @@ class FirebaseService {
 
   DocumentReference get currentUserRef => FirebaseFirestore.instance.collection(users).doc(currentUser.uid);
 
+  CollectionReference get currentUsersTodoRef =>
+      FirebaseFirestore.instance.collection(users).doc(currentUser.uid).collection(todos);
+
+  Stream<QuerySnapshot> todosStream() => currentUserRef.collection(todos).orderBy('index').snapshots();
+
   Future<dynamic> signInAnonymously() async {
     try {
       final user = (await FirebaseAuth.instance.signInAnonymously()).user;
@@ -44,5 +49,29 @@ class FirebaseService {
     }
   }
 
-  Stream<QuerySnapshot> todosStream() => currentUserRef.collection(todos).snapshots();
+  Future<dynamic> createNewTodo(Map<String, dynamic> data) async {
+    try {
+      showLoader();
+      final doc = await currentUsersTodoRef.add(data);
+
+      /// add newly created doc id to to-do document.
+      updateTodo(doc.id, {"id": doc.id});
+      hideLoader();
+      return true;
+    } catch (e) {
+      showLog("createNewTodo exception ======>> $e");
+    }
+    return false;
+  }
+
+  Future<dynamic> updateTodo(String id, Map<String, dynamic> data) async {
+    try {
+      await currentUsersTodoRef.doc(id).set(data, SetOptions(merge: true));
+      return true;
+    } catch (e) {
+      showLog("updateTodo exception ======>> $e");
+    }
+
+    return false;
+  }
 }

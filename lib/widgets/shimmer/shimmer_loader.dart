@@ -67,8 +67,8 @@ class _ShimmerHeaderState extends RefreshIndicatorState<ShimmerHeader> with Tick
         ? widget.outerBuilder!.call(body)
         : Container(
             alignment: prefix0.Alignment.center,
-            child: body,
             decoration: const prefix0.BoxDecoration(color: Colors.black12),
+            child: body,
           );
   }
 }
